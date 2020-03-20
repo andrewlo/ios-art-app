@@ -8,9 +8,14 @@
 
 import SwiftUI
 
+struct WebImage: Decodable, Hashable {
+    var url: String
+}
+
 struct ArtImage: Decodable, Identifiable, Hashable {
     var id: String
-    var title: String;
+    var title: String
+    var webImage: WebImage
 }
 
 struct ArtImageResults: Decodable {
@@ -33,7 +38,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             MasterView(dates: $dates, artImages: $artImages)
-                .navigationBarTitle(Text("Master"))
+                .navigationBarTitle(Text("List"))
                 .navigationBarItems(
                     leading: EditButton(),
                     trailing: Button(
@@ -78,11 +83,11 @@ struct MasterView: View {
 
     var body: some View {
         VStack() {
-            Button(action: {
-                print("button clicked!")
-            }) {
-                Text("Button")
-            }
+//            Button(action: {
+//                print("button clicked!")
+//            }) {
+//                Text("Button")
+//            }
 //            List {
 //                ForEach(dates, id: \.self) { date in
 //                    NavigationLink(
@@ -94,21 +99,27 @@ struct MasterView: View {
 //                    indices.forEach { self.dates.remove(at: $0) }
 //                }
 //            }
-            List {
-                ForEach(artImages, id: \.self) { artImage in
-                    Text("\(artImage.title)")
-                        .font(.largeTitle)
-                        .fontWeight(.ultraLight)
-//                        .foregroundColor(Color.orange)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(nil)
-                        .padding(.leading, 4.0)
-                        
+            if artImages.isEmpty {
+                Text("Loading...")
+            } else {
+                
+                List {
+                    ForEach(artImages, id: \.self) { artImage in
+                        Text("\(artImage.title)")
+                            .font(.largeTitle)
+                            .fontWeight(.ultraLight)
+    //                        .foregroundColor(Color.orange)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(nil)
+                            .padding(.leading, 4.0)
+                            
+                    }
+    //                .onDelete { indices in
+    //                    indices.forEach { self.artImages.remove(at: $0) }
+    //                }
                 }
-//                .onDelete { indices in
-//                    indices.forEach { self.artImages.remove(at: $0) }
-//                }
             }
+
         }
     }
 }

@@ -8,6 +8,16 @@
 
 import SwiftUI
 
+struct ArtImage: Decodable, Identifiable, Hashable {
+    var id: String
+    var title: String;
+}
+
+struct ArtImageResults: Decodable {
+    public var artObjects: [ArtImage]
+    
+}
+
 private let dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = .medium
@@ -17,10 +27,12 @@ private let dateFormatter: DateFormatter = {
 
 struct ContentView: View {
     @State private var dates = [Date]()
+    @State private var artImages = [ArtImage]()
+//    @State var movies = [Movie]()
 
     var body: some View {
         NavigationView {
-            MasterView(dates: $dates)
+            MasterView(dates: $dates, artImages: $artImages)
                 .navigationBarTitle(Text("Master"))
                 .navigationBarItems(
                     leading: EditButton(),
@@ -34,22 +46,68 @@ struct ContentView: View {
                 )
             DetailView()
         }.navigationViewStyle(DoubleColumnNavigationViewStyle())
+            .onAppear(perform: loadData)
+    }
+
+    func loadData() {
+        print("load data!")
+        let url = URL(string: "https://www.rijksmuseum.nl/api/en/collection?q=&key=pUaGTYo5&format=json")!
+        
+            URLSession.shared.dataTask(with: url) {(data,response,error) in
+                do {
+                    if let d = data {
+                        let decoded = try JSONDecoder().decode(ArtImageResults.self, from: d)
+                        DispatchQueue.main.async {
+                            print("decoded", decoded)
+                            self.artImages = decoded.artObjects
+                        }
+                    }else {
+                        print("No Data")
+                    }
+                } catch {
+                    print ("Error", error)
+                }
+                
+            }.resume()
     }
 }
 
 struct MasterView: View {
     @Binding var dates: [Date]
+    @Binding var artImages: [ArtImage]
 
     var body: some View {
-        List {
-            ForEach(dates, id: \.self) { date in
-                NavigationLink(
-                    destination: DetailView(selectedDate: date)
-                ) {
-                    Text("\(date, formatter: dateFormatter)")
+        VStack() {
+            Button(action: {
+                print("button clicked!")
+            }) {
+                Text("Button")
+            }
+//            List {
+//                ForEach(dates, id: \.self) { date in
+//                    NavigationLink(
+//                        destination: DetailView(selectedDate: date)
+//                    ) {
+//                        Text("\(date, formatter: dateFormatter)")
+//                    }
+//                }.onDelete { indices in
+//                    indices.forEach { self.dates.remove(at: $0) }
+//                }
+//            }
+            List {
+                ForEach(artImages, id: \.self) { artImage in
+                    Text("\(artImage.title)")
+                        .font(.largeTitle)
+                        .fontWeight(.ultraLight)
+//                        .foregroundColor(Color.orange)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil)
+                        .padding(.leading, 4.0)
+                        
                 }
-            }.onDelete { indices in
-                indices.forEach { self.dates.remove(at: $0) }
+//                .onDelete { indices in
+//                    indices.forEach { self.artImages.remove(at: $0) }
+//                }
             }
         }
     }

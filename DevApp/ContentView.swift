@@ -57,7 +57,7 @@ struct ContentView: View {
 
     func loadData() {
         print("load data!")
-        let url = URL(string: "https://www.rijksmuseum.nl/api/en/collection?q=&key=pUaGTYo5&format=json")!
+        let url = URL(string: "https://www.rijksmuseum.nl/api/en/collection?q=landscape&key=pUaGTYo5&format=json")!
         
             URLSession.shared.dataTask(with: url) {(data,response,error) in
                 do {
@@ -109,8 +109,8 @@ struct MasterView: View {
                     ForEach(artImages, id: \.self) { artImage in
                         VStack(alignment: .leading) {
                             Text("\(artImage.title)")
-                                .font(.largeTitle)
-                                .fontWeight(.ultraLight)
+//                                .font(.largeTitle)
+//                                .fontWeight(.ultraLight)
                                 .lineLimit(nil)
 //                            URLImage(url: URL(string: )!)
                             URLImage(URL(string: artImage.webImage.url)!) { proxy in

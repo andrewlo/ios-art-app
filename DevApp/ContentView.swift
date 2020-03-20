@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct WebImage: Decodable, Hashable {
     var url: String
@@ -102,21 +103,27 @@ struct MasterView: View {
             if artImages.isEmpty {
                 Text("Loading...")
             } else {
-                
+
+
                 List {
                     ForEach(artImages, id: \.self) { artImage in
-                        Text("\(artImage.title)")
-                            .font(.largeTitle)
-                            .fontWeight(.ultraLight)
-    //                        .foregroundColor(Color.orange)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(nil)
-                            .padding(.leading, 4.0)
+                        VStack(alignment: .leading) {
+                            Text("\(artImage.title)")
+                                .font(.largeTitle)
+                                .fontWeight(.ultraLight)
+                                .lineLimit(nil)
+//                            URLImage(url: URL(string: )!)
+                            URLImage(URL(string: artImage.webImage.url)!) { proxy in
+                                proxy.image
+                                    .resizable()                     // Make image resizable
+                                    .aspectRatio(contentMode: .fill) // Fill the frame
+//                                    .clipped()                       // Clip overlaping parts
+                                }
+//                                .frame(width: 100.0, height: 100.0)  // Set frame to 100x100.
                             
+                        }
+
                     }
-    //                .onDelete { indices in
-    //                    indices.forEach { self.artImages.remove(at: $0) }
-    //                }
                 }
             }
 

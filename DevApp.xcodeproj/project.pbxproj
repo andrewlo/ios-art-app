@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB3531F22424A5850074378D /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = FB3531F12424A5850074378D /* URLImage */; };
 		FB6C4DF02423391900D7F4FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6C4DEF2423391900D7F4FE /* AppDelegate.swift */; };
 		FB6C4DF22423391900D7F4FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6C4DF12423391900D7F4FE /* SceneDelegate.swift */; };
 		FB6C4DF42423391900D7F4FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6C4DF32423391900D7F4FE /* ContentView.swift */; };
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB3531F22424A5850074378D /* URLImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +154,9 @@
 			dependencies = (
 			);
 			name = DevApp;
+			packageProductDependencies = (
+				FB3531F12424A5850074378D /* URLImage */,
+			);
 			productName = DevApp;
 			productReference = FB6C4DEC2423391900D7F4FE /* DevApp.app */;
 			productType = "com.apple.product-type.application";
@@ -224,6 +229,9 @@
 				Base,
 			);
 			mainGroup = FB6C4DE32423391900D7F4FE;
+			packageReferences = (
+				FB3531F02424A5850074378D /* XCRemoteSwiftPackageReference "url-image" */,
+			);
 			productRefGroup = FB6C4DED2423391900D7F4FE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -588,6 +596,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FB3531F02424A5850074378D /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.12;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FB3531F12424A5850074378D /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB3531F02424A5850074378D /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FB6C4DE42423391900D7F4FE /* Project object */;
 }
